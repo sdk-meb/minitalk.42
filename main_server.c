@@ -12,15 +12,29 @@
 
 #include "talk.h"
 
-void sig_handler(int signum){
-  ft_printf("Inside handler function server %d\n",signum );
+void receive_sig(int signum)
+{
+  static char     c;
+  static short power;
+
+  if (!power || power == 1)
+    power++;
+  else
+    power *= 2;
+  c += (signum % 2) * power;
+  if (power == 128)
+  {
+    ft_printf("%c",c);
+    c = 0;
+    power = 0;
+  }
 }
 
 int main()
 {
-  signal(SIGUSR1,sig_handler);
-  ft_printf("Inside main function server\n");
-  ft_printf("\n__ %d __\n",getpid());
+  ft_printf("%d\n",getpid());
+  signal(SIGUSR1, receive_sig);
+  signal(SIGUSR2, receive_sig);
   while(1);
   return 0;
 }
