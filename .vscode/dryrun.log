@@ -1,0 +1,10 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory `/Users/mes-sadk/Desktop/minitalk'
+gcc -Wall -Wextra -Werror   -c -o main_server.o main_server.c
+ 
+CC   -o server main_server.o libft/libft.a
+gcc -Wall -Wextra -Werror   -c -o main_client.o main_client.c
+CC   -o client main_client.o libft/libft.a
+rm -rf main_server.o
+make: Leaving directory `/Users/mes-sadk/Desktop/minitalk'
+ 

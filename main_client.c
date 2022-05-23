@@ -11,18 +11,18 @@
 /* ************************************************************************** */
 #include "talk.h"
 
-void ds(int pid, int mes)
-{
-   kill(pid, mes);
-    while (1);
-    exit (0);
+void sig_handler(int signum){
+  ft_printf("Inside handler function%d\n",signum );
 }
 
-int main(int c ,char **t)
+int main(int l_parm, char **info)
 {
-   ft_printf("\n%s\n",t[1]);
-    c = ft_atoi(t[1]);
-    ds(getpid(), c);
+  pid_t pid = l_parm;
 
-    return (0);
+  signal(SIGUSR1,sig_handler);
+  pid = ft_atoi(info[1]);
+  kill(pid,SIGUSR1);
+  ft_printf("Inside main function\n");
+  while(1);
+  return 0;
 }
