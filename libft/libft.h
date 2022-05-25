@@ -6,7 +6,7 @@
 /*   By: mes-sadk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 19:30:21 by mes-sadk          #+#    #+#             */
-/*   Updated: 2021/11/23 10:04:29 by mes-sadk         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:50:04 by mes-sadk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_putendl_fd(char *s, int fd);
 char	*ft_strdup(const char *s1);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_charjoin(const char *str, char c);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *s);

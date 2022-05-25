@@ -10,7 +10,7 @@ OBJ_SERV = main_server.o
 OBJ_CLNT = main_client.o
 
 all: ${SERVER} ${CLIENT}
-	@rm -rf ${OBJ_SERV}
+	@rm -rf ${OBJ_CLNT} ${OBJ_SERV}
 
 ${SERVER}: ${OBJ_SERV} 
 	@CC ${FLAGS}  -o ${SERVER} ${OBJ_SERV} ${LIBFT}
@@ -21,7 +21,6 @@ ${CLIENT}: ${OBJ_CLNT}
 bonus:
 
 clean:
-	@rm -rf ${OBJ_CLNT} ${OBJ_SERV}
 
 fclean:	clean
 	@rm -rf ${NAME}  ${SERVER} ${CLIENT}

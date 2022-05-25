@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_charjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mes-sadk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 11:04:30 by mes-sadk          #+#    #+#             */
-/*   Updated: 2022/05/25 16:03:10 by mes-sadk         ###   ########.fr       */
+/*   Created: 2022/05/25 10:10:52 by mes-sadk          #+#    #+#             */
+/*   Updated: 2022/05/25 16:05:55 by mes-sadk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_charjoin(const char *str, char c)
 {
-	int		i;
-	char	*join;
+	char	*strj;
+	int		len;
 
-	if (!s1 || !s2)
-		return (NULL);
-	i = ft_strlen((char *)s1) + ft_strlen((char *)s2);
-	join = malloc (1 + i);
-	if (!join)
-		return (NULL);
-	join[i] = '\0';
-	while (*s1)
-		*join++ = *s1++;
-	while (*s2)
-		*join++ = *s2++;
-	return (join -= i);
+	if (!str)
+		len = 0;
+	else
+		len = ft_strlen(str);
+	strj = malloc(len + 2);
+	if (!strj)
+		return ((char *) str);
+	strj[len + 1] = '\0';
+	if (str)
+	{
+		ft_memmove((void *)strj, str, len + 1);
+		free ((void *) str);
+	}
+	strj[len] = c;
+	return (strj);
 }
