@@ -20,7 +20,12 @@ void	received(int sig)
 	}
 	else if (sig == SIGUSR1)
 	{
-		ft_printf("your data does not received completely by server !!!\n");
+		ft_printf("(...)Your data does not received completely by server !!\n");
+		exit (1);
+	}
+	else if (sig == -1)
+	{
+		ft_printf("!!! your data does not received correctly by server !!!\n");
 		exit (1);
 	}
 }
@@ -33,7 +38,7 @@ void	send_bit_by_bit(int pid, char data_c)
 	while (size_ascii < 8)
 	{
 		kill(pid, SIGUSR1 + ((data_c >> size_ascii++) & 1));
-		usleep(100);
+		usleep(70);
 	}
 }
 
@@ -50,18 +55,20 @@ void	dismantling_mes(int pid, char *message)
 	}
 	send_bit_by_bit(pid, '\0');
 	sleep(4);
-	received(SIGUSR1 % 2);
+	received(-1);
 }
 
 int	main(int l_parm, char **info)
 {
-	if (l_parm != 3)
+	int pid;
+
+	pid = ft_atoi(info[1]);
+	if (l_parm != 3 || pid < 0)
 	{
 		ft_printf("The PID or the message has no selected !!!\n");
 		exit (0);
 	}
-	dismantling_mes(ft_atoi(info[1]), info[2]);
-	while (l_parm)
-		l_parm = 1;
+	dismantling_mes(pid, info[2]);
+	received(-1);
 	return (0);
 }

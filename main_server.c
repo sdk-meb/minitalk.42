@@ -11,11 +11,16 @@
 /* ************************************************************************** */
 #include "talk.h"
 
-char	bit_assembly(bool bit)
+char	bit_assembly(bool bit, bool rest)
 {
 	int static				size_ascii;
 	unsigned char static	c;
 
+	if (rest)
+	{
+		size_ascii = 0;
+		c = 0;
+	}
 	c |= bit << size_ascii;
 	if (++size_ascii == 8)
 	{
@@ -35,13 +40,14 @@ void	receive_sig(int signum, siginfo_t *info, void *uap)
 	(void )uap;
 	if (!g_pid)
 		g_pid = info->si_pid;
-	else if (g_pid != info->si_pid)
+	if (g_pid != info->si_pid && info->si_pid)
 	{
 		kill(g_pid, SIGUSR1);
+		bit_assembly(signum % 2, 1);
 		g_pid = info->si_pid;
 		return ;
 	}
-	if (!bit_assembly(signum % 2))
+	if (!bit_assembly(signum % 2, 0))
 	{
 		kill (g_pid, SIGUSR2);
 		g_pid = 0;
@@ -53,19 +59,18 @@ void	icp_cl(void)
 	struct sigaction	act;
 
 	act.sa_sigaction = &receive_sig;
-	ft_printf(" PROCESS NAME                 PID\n\
-	server                      %d\n", getpid());
-	sigaction(SIGUSR1, &act, NULL);
-	sigaction(SIGUSR2, &act, NULL);
+	ft_printf(" PROCESS NAME                 PID\n");
+	ft_printf("   server                     %d\n", getpid());
+	while (1)
+	{
+		sigaction(SIGUSR1, &act, NULL);
+		sigaction(SIGUSR2, &act, NULL);
+		pause();
+	}
 }
 
 int	main(void)
 {
-	int	i;
-
-	i = 1;
 	icp_cl ();
-	while (i)
-		i = 1;
 	return (0);
 }
